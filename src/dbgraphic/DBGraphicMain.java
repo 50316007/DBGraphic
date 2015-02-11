@@ -21,13 +21,6 @@ public class DBGraphicMain {
         data[i][2] = rs.getDouble("High Price");
         data[i][3] = rs.getDouble("Low Price");
         data[i][4] = rs.getDouble("Closing Price");
-        /*
-          System.out.print(data[i][0] + ",");
-          System.out.print(data[i][1] + ",");
-          System.out.print(data[i][2] + ",");
-          System.out.print(data[i][3] + ",");
-          System.out.println(data[i][4]);
-        */
         i++;
       }
       frame = new DBGraphicFrameSystem(data);
