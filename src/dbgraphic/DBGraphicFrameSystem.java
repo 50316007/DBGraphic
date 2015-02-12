@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
@@ -48,10 +49,10 @@ public class DBGraphicFrameSystem extends JFrame implements ActionListener, Wind
   private ChartPanel chart;
   
   public DBGraphicFrameSystem(Object[][] obj){
-    table.setName("USD / JPY by month from April 2007 to February 2015");
+    Date[] date = new Date[obj.length];
+    table.setName("USD / JPY");
     setData2Table(obj);
     ChartFactory.setChartTheme(StandardChartTheme.createLegacyTheme());
-    Date[] date = new Date[obj.length];
     double[] open = new double[obj.length];
     double[] high = new double[obj.length];
     double[] low = new double[obj.length];
@@ -66,6 +67,16 @@ public class DBGraphicFrameSystem extends JFrame implements ActionListener, Wind
       volume[i] = 30.0d;
     }
     
+    Calendar cal1 = Calendar.getInstance();
+    Calendar cal2 = Calendar.getInstance();
+    cal1.setTime(date[0]);
+    cal2.setTime(date[obj.length - 1]);
+    String[] month = {"Janurary", "February", "March", "April", "May", "June",
+                      "July", "August", "September", "November", "December"};
+    String name = new String("USD / JPY by month from " 
+        + month[cal1.get(Calendar.MONTH)]  + " " + cal1.get(Calendar.YEAR) 
+        + " to " + month[cal2.get(Calendar.MONTH)] + " " + cal2.get(Calendar.YEAR));
+    
     DefaultHighLowDataset data = new DefaultHighLowDataset("USD / JPY",
                                                             date,
                                                             high,
@@ -75,7 +86,7 @@ public class DBGraphicFrameSystem extends JFrame implements ActionListener, Wind
                                                             volume);
     
     JFreeChart chart = 
-        ChartFactory.createHighLowChart("USD / JPY by month from April 2007 to February 2015",
+        ChartFactory.createHighLowChart(name,
                                      "Yeah",
                                      "Price",
                                      data,
@@ -96,7 +107,7 @@ public class DBGraphicFrameSystem extends JFrame implements ActionListener, Wind
     northPanel.add(button1);
     mainPanel.add(centerPanel, BorderLayout.CENTER);
     tablePanel.setLayout(new BoxLayout(tablePanel,BoxLayout.Y_AXIS));
-    JLabel label = new JLabel("USD / JPY by month from April 2007 to February 2015");
+    JLabel label = new JLabel(name);
     label.setAlignmentX(CENTER_ALIGNMENT);
     tablePanel.add(label);
     tablePanel.add(sp);
